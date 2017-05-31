@@ -18,4 +18,7 @@ INSERT INTO attendant VALUES (DEFAULT, 3);
 
 INSERT INTO event_attendant VALUES (1, 1);
 INSERT INTO event_attendant VALUES (2, 1);
+INSERT INTO event_attendant VALUES (2, 2);
 INSERT INTO event_attendant VALUES (3, 1);
+INSERT INTO event_attendant VALUES (3, 2);
+INSERT INTO event_attendant VALUES (3, 3);

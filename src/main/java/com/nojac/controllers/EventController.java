@@ -21,6 +21,9 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
+    @Autowired
+    private NjUserRepository njUserRepository;
+
     @RequestMapping(value="/allevents", method=RequestMethod.GET)
     public List<Event> allEvents() {
         return eventRepository.findAll();
@@ -32,9 +35,11 @@ public class EventController {
         return created;
     }
 
-    @RequestMapping(value="/specialevent", method=RequestMethod.POST)
-    public boolean addEventWithoutDoubleBooking(@RequestBody Event event) {
+    @RequestMapping(value="/event", method=RequestMethod.POST)
+    //TODO              revert ^
+    public Event addEventWithoutDoubleBooking(@RequestBody Event event) {
         List<Event> events = getEventsByUserId();
+<<<<<<< HEAD
         boolean search = false;
         //retrieve start, end
         for (Event Ev : events) {
@@ -50,10 +55,19 @@ public class EventController {
             return true;
         }
         
+=======
+        //TODO retrieve start, end
+        //TODO compare with events in list
+        Event created = eventRepository.save(event);
+        return created;
+>>>>>>> origin/master
     }
 
-    public List<Event> getEventsByUserId() {
-        return new ArrayList<Event>();
+//    event.getCalendar().getNjUser().getUserId();
+    private Set<Event> getEventsByUserId(Long userId) {
+        NjUser njUser = njUserRepository.findOne(userId);
+        Set<Event> events = njUser.getCalendar().getEvents();
+        return events;
     }
 
 
