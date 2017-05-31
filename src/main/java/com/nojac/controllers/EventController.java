@@ -36,9 +36,9 @@ public class EventController {
     public boolean addEventWithoutDoubleBooking(@RequestBody Event event) {
         List<Event> events = getEventsByUserId();
         boolean search = false;
-        //TODO retrieve start, end
+        //retrieve start, end
         for (Event Ev : events) {
-             if(!(event.getEnd().before(Ev.getStart()) || event.getStart().after(Ev.getStart()))){
+             if(!(event.getEnd().before(Ev.getStart()) || event.getStart().after(Ev.getEnd()))){
                  search = true;
                  break;
              }
