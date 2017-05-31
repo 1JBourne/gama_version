@@ -32,13 +32,23 @@ public class EventController {
         return created;
     }
 
-    @RequestMapping(value="/event", method=RequestMethod.POST)
-    public Event addEventWithoutDoubleBooking(@RequestBody Event event) {
+    @RequestMapping(value="/specialevent", method=RequestMethod.POST)
+    public boolean addEventWithoutDoubleBooking(@RequestBody Event event) {
         List<Event> events = getEventsByUserId();
+        boolean search = false;
         //TODO retrieve start, end
-        //TODO compare with events in list
-        Event created = eventRepository.save(event);
-        return created;
+        for (Event Ev : events) {
+             if(!(event.getEnd().before(Ev.getStart()) || event.getStart().after(Ev.getStart()))){
+                 search = true;
+                 break;
+             }
+        }
+        if(!search){
+            eventRepository.save(event);
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public List<Event> getEventsByUserId() {
