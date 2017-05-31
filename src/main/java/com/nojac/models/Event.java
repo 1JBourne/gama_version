@@ -1,7 +1,11 @@
 package com.nojac.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by nickolas on 5/30/17.
@@ -21,6 +25,30 @@ public class Event {
     private String description;
     private Date start;
     private Date end;
+
+    @ManyToOne
+    @JoinColumn(name = "calendar_id", referencedColumnName = "calendar_id", foreignKey = @ForeignKey(name = "fk_calendar"))
+    @JsonIgnoreProperties("njEvents")
+    //    @JsonManagedReference
+    private Calendar calendar;
+
+    @ManyToMany
+    @JoinTable(name="event_attendant", joinColumns=@JoinColumn(name="event_id"), inverseJoinColumns=@JoinColumn(name="attendant_id"))
+    @JsonIgnoreProperties("events")
+    private Set<Attendant> attendants = new HashSet<>(0);
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+    public Set<Attendant> getAttendants() {
+        return attendants;
+    }
+    public void setAttendants(Set<Attendant> attendants) {
+        this.attendants = attendants;
+    }
 
     public Long getId() {
         return id;
