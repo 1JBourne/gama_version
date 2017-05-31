@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,20 @@ public class EventController {
         Event created = eventRepository.save(event);
         return created;
     }
+
+    @RequestMapping(value="/event", method=RequestMethod.POST)
+    public Event addEventWithoutDoubleBooking(@RequestBody Event event) {
+        List<Event> events = getEventsByUserId();
+        //TODO retrieve start, end
+        //TODO compare with events in list
+        Event created = eventRepository.save(event);
+        return created;
+    }
+
+    public List<Event> getEventsByUserId() {
+        return new ArrayList<Event>();
+    }
+
 
     @RequestMapping(value="/event", method=RequestMethod.PATCH)
     public Event updateEvent(@RequestBody Event event) {
