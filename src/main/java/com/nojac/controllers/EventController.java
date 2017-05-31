@@ -2,6 +2,7 @@ package com.nojac.controllers;
 
 import com.nojac.errors.BadDateFormatException;
 import com.nojac.models.Event;
+import com.nojac.models.NjUser;
 import com.nojac.repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by nickolas on 5/30/17.
@@ -35,18 +37,17 @@ public class EventController {
         return created;
     }
 
-    @RequestMapping(value="/event", method=RequestMethod.POST)
-    //TODO              revert ^
-    public Event addEventWithoutDoubleBooking(@RequestBody Event event) {
-        List<Event> events = getEventsByUserId();
-<<<<<<< HEAD
+    @RequestMapping(value="/specialevent", method=RequestMethod.POST)
+    public boolean addEventWithoutDoubleBooking(@RequestBody Event event) {
+        Long userId = event.getCalendar().getNjUser().getUserId();
+        Set<Event> events = getEventsByUserId(userId);
         boolean search = false;
         //retrieve start, end
         for (Event Ev : events) {
-             if(!(event.getEnd().before(Ev.getStart()) || event.getStart().after(Ev.getEnd()))){
-                 search = true;
-                 break;
-             }
+            if(!(event.getEnd().before(Ev.getStart()) || event.getStart().after(Ev.getEnd()))){
+                search = true;
+                break;
+            }
         }
         if(!search){
             eventRepository.save(event);
@@ -54,13 +55,6 @@ public class EventController {
         }else{
             return true;
         }
-        
-=======
-        //TODO retrieve start, end
-        //TODO compare with events in list
-        Event created = eventRepository.save(event);
-        return created;
->>>>>>> origin/master
     }
 
 //    event.getCalendar().getNjUser().getUserId();
