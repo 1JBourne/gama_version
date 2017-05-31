@@ -21,8 +21,16 @@
 $(document).ready(function() {
 
 	$('#calendar').fullCalendar({
+		customButtons: {
+            details: {
+                text: 'Prevent double booking',
+                click: function () {
+                    alert('Lets try this...');
+                }
+            }
+        },
 		header: {
-			left: 'prev,next today',
+			left: 'prev,next, today, details',
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},

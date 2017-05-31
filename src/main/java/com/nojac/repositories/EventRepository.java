@@ -20,5 +20,5 @@ public interface EventRepository extends CrudRepository<Event, Long> {
             "where b.start between ?1 and ?2 and b.end between ?1 and ?2")
     List<Event> findByDatesBetween(Date start, Date end);
 
-    List<Event> getEventsByUserId(Long userId);
+//    List<Event> getEventsByUserId(Long userId);
 }
