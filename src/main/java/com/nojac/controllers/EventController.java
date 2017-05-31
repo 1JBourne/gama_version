@@ -4,6 +4,7 @@ import com.nojac.errors.BadDateFormatException;
 import com.nojac.models.Event;
 import com.nojac.models.NjUser;
 import com.nojac.repositories.EventRepository;
+import com.nojac.repositories.NjUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,7 +58,6 @@ public class EventController {
         }
     }
 
-//    event.getCalendar().getNjUser().getUserId();
     private Set<Event> getEventsByUserId(Long userId) {
         NjUser njUser = njUserRepository.findOne(userId);
         Set<Event> events = njUser.getCalendar().getEvents();
