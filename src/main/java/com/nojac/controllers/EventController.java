@@ -49,6 +49,7 @@ public class EventController {
         }else{
             return true;
         }
+        
     }
 
     public List<Event> getEventsByUserId() {
