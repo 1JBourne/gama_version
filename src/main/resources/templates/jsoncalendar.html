@@ -220,9 +220,22 @@
 					title: newtitle.value,
 					description: description.value,
 					start: eventStart,
-					end: eventEnd, 
-				};
+					end: eventEnd,
+					calendar:  {
+                        "calendarId": 1,
+                        "calendarName": "Uni Calendar",
+                        "type": "Professional",
+                        "njUser": {
+                            "userId": 1,
+                            "username": "kostas",
+                            "email": "kostas@gmail.com",
+                            "hashPass": "1234567890",
+                            "created": 1496297681000,
+                            "updated": null
+                        }
+					}
 				//$('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+				}
 			}
 			
 			$('#calendar').fullCalendar('unselect');
@@ -238,9 +251,15 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
-                        $('#calendar').fullCalendar('renderEvent', data, true); // stick? = true
+                        console.log('SUCCESS');
+                        if(data.description == 'WARNING' ){	//|| !data
+                            alert('You are trying to create an overlapping event; You have been warned!');
+                        } else {
+                            $('#calendar').fullCalendar('renderEvent', data, true); // stick? = true
+                        }
                     },
                     failure: function (errMsg) {
+                        console.log('FAILURE');
                         alert(errMsg);
                     }
                 });

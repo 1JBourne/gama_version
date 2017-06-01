@@ -75,8 +75,9 @@ public class EventController {
     }
 
     @RequestMapping(value="/specialevent", method=RequestMethod.POST)
-    public boolean addEventWithoutDoubleBooking(@RequestBody Event event) {
+    public Event addEventWithoutDoubleBooking(@RequestBody Event event) {
         Long userId = event.getCalendar().getNjUser().getUserId();
+//        System.out.println("userId: " + userId);
         Set<Event> events = getEventsByUserId(userId);
         boolean search = false;
         //retrieve start, end
@@ -88,9 +89,12 @@ public class EventController {
         }
         if(!search){
             eventRepository.save(event);
-            return false;
+//            return false;
+            return event;
         }else{
-            return true;
+            Event error = new Event();
+            error.setDescription("WARNING");
+            return error;
         }
     }
 
